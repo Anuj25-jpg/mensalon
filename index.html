@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rocky Men's Salon - Luxury Grooming Redefined</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery-js/1.4.0/css/lightgallery.min.css">
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --dark: #0A0A0A;
+            --darker: #050505;
+            --light: #F5F5F5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        body {
+            background: var(--darker);
+            color: var(--light);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            transition: transform 0.3s, opacity 0.3s;
+            z-index: 9999;
+        }
+
+        .cursor-trail {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            transition: transform 0.3s, opacity 0.3s;
+            z-index: 9998;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 0;
+            z-index: 1000;
+            transition: padding 0.4s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 0.8rem 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 2px;
+        }
+
+        .navbar .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .navbar .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .hamburger .line {
+            width: 25px;
+            height: 2px;
+            background: var(--light);
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            filter: brightness(0.4);
+            object-fit: cover;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding-top: 20vh;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 72px;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 20px;
+            letter-spacing: 4px;
+        }
+
+        .hero p {
+            font-size: 24px;
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+
+        .btn-gold {
+            background: linear-gradient(45deg, #D4AF37, #B8972E);
+            padding: 15px 40px;
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Sparkles */
+        .sparkles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: rgba(218, 165, 32, 0.8); /* Shiny gold */
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(218, 165, 32, 1), 0 0 30px rgba(218, 165, 32, 0.7); /* Enhanced glow */
+            animation: sparkle 1.2s ease-out forwards;
+        }
+
+        @keyframes sparkle {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.3); opacity: 1; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        /* Services Section */
+        .services {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .services h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            color: var(--gold);
+            margin-bottom: 40px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-item {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .service-item:hover {
+            transform: rotateY(15deg) rotateX(10deg) scale(1.05);
+        }
+
+        .service-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .service-item h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .service-item p {
+            font-size: 16px;
+            font-weight: 300;
+        }
+
+        /* Glassmorphism */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        /* About Us Section */
+        .about {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .about h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            color: var(--gold);
+            margin-bottom: 40px;
+        }
+
+        .about .glass-card {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        .about p {
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            color: var(--gold);
+            margin-bottom: 40px;
+        }
+
+        .contact-info {
+            margin-bottom: 20px;
+        }
+
+        .contact form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact input, .contact textarea {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--light);
+            font-size: 16px;
+        }
+
+        .contact textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        /* Location Section */
+        .location {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .location h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            color: var(--gold);
+            margin-bottom: 40px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: var(--light);
+        }
+
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darker);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s;
+        }
+
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 3px solid var(--gold);
+            border-radius: 50%;
+            animation: rotation 1s linear infinite;
+        }
+
+        .loader::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: 3px solid;
+            border-color: var(--dark) transparent;
+        }
+
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar .nav-links {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                flex-direction: column;
+                background: rgba(10, 10, 10, 0.95);
+                width: 100%;
+                text-align: center;
+                transition: right 0.3s ease;
+                padding: 20px 0;
+            }
+
+            .navbar.active .nav-links {
+                right: 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .btn-gold {
+                padding: 12px 30px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+    <div class="cursor-trail"></div>
+
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">ROCKY MEN'S SALON</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#location">Location</a></li>
+            </ul>
+            <div class="hamburger">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <video autoplay muted loop class="hero-video">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-barber-shop-interior-421-large.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="sparkles"></div>
+        <div class="hero-content">
+            <h1>Luxury Grooming Experience</h1>
+            <p>Where Precision Meets Passion</p>
+            <a href="#contact" class="btn-gold">Book VIP Session</a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services fade-in" id="services">
+        <h2>Our Services</h2>
+        <div class="services-grid">
+            <div class="service-item glass-card">
+                <img src="hair.jpeg" alt="Haircut" class="service-image">
+                <h3>Haircut</h3>
+                <p>Precision cuts tailored to your style, from classic trims to trendy fades.</p>
+            </div>
+            <div class="service-item glass-card">
+                <img src="beard.jpeg" alt="Beard Trimming/Shaving" class="service-image">
+                <h3>Beard Trimming/Shaving</h3>
+                <p>Expert beard styling or clean shaves with hot towel treatment.</p>
+            </div>
+            <div class="service-item glass-card">
+                <img src="color.jpeg" alt="Hair Coloring" class="service-image">
+                <h3>Hair Coloring</h3>
+                <p>Vibrant global colors or subtle highlights using premium products.</p>
+            </div>
+            <div class="service-item glass-card">
+                <img src="straighten.jpeg" alt="Hair Straightening/Smoothening" class="service-image">
+                <h3>Hair Straightening/Smoothening</h3>
+                <p>Chemical treatments like keratin for sleek, frizz-free hair.</p>
+            </div>
+            <div class="service-item glass-card">
+                <img src="facial.jpeg" alt="Facial Treatments" class="service-image">
+                <h3>Facial Treatments</h3>
+                <p>Deep cleansing, hydrating, or anti-aging facials for men's skin.</p>
+            </div>
+            <div class="service-item glass-card">
+                <img src="waxing.jpeg" alt="Waxing" class="service-image">
+                <h3>Waxing</h3>
+                <p>Smooth, long-lasting hair removal for chest, arms, back, and more.</p>
+            </div>
+            <div class="service-item glass-card">
+                <img src="spa.jpeg" alt="Hair Spa/Treatments" class="service-image">
+                <h3>Hair Spa/Treatments</h3>
+                <p>Nourishing scalp and hair treatments for healthy hair.</p>
+            </div>
+            <div class="service-item glass-card">
+                <img src="package.jpeg" alt="Grooming Packages" class="service-image">
+                <h3>Grooming Packages</h3>
+                <p>Custom combos for grooms or special occasions.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section class="about fade-in" id="about">
+        <h2>About Us</h2>
+        <div class="glass-card">
+            <h3>Crafting Masculine Elegance Since 2020</h3>
+            <p>At Rocky Men's Salon, we redefine luxury grooming for men. With over FIVE years of experience, our expert barbers and stylists provide personalized services in a sophisticated environment. Step in to experience precision, passion, and unparalleled style.</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact fade-in" id="contact">
+        <h2>Contact Us</h2>
+        <div class="contact-info">
+            <p>Phone: +91 9827439915</p>
+            <p>Email: rockymensalon23@gmail.com</p>
+        </div>
+        <form>
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" required></textarea>
+            <button type="submit" class="btn-gold">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Location Section -->
+    <section class="location fade-in" id="location">
+        <h2>Our Location</h2>
+        <p>56, NEHRU COLONY, MAYURNAGAR THATIPUR, GWALIOR (M.P)</p>
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d342.6700424088268!2d78.20258454512336!3d26.216338765195726!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3976c15537a26a3b%3A0xad541156292fb3bd!2s56%2C%20near%20Garg%20clinic%2C%20Nehru%20Colony%2C%20Mayur%20Nagar%2C%20Thatipur%2C%20Gwalior%2C%20Madhya%20Pradesh%20474011!5e0!3m2!1sen!2sin!4v1745750173169!5m2!1sen!2sin" 
+            width="100%" 
+            height="450" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 Rocky Men's Salon. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery-js/1.4.0/js/lightgallery.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Preloader
+            window.addEventListener('load', () => {
+                const preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 500);
+            });
+
+            // Custom Cursor
+            const cursor = document.querySelector('.custom-cursor');
+            const trail = document.querySelector('.cursor-trail');
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+                setTimeout(() => {
+                    trail.style.left = e.clientX + 'px';
+                    trail.style.top = e.clientY + 'px';
+                }, 50);
+            });
+
+            // Hamburger Menu
+            const hamburger = document.querySelector('.hamburger');
+            const navbar = document.querySelector('.navbar');
+            hamburger.addEventListener('click', () => {
+                navbar.classList.toggle('active');
+            });
+
+            // Lightbox Gallery
+            lightGallery(document.querySelector('.gallery-grid'), {
+                selector: '.gallery-item',
+                download: false,
+                zoom: true
+            });
+
+            // Scroll Animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+            // Sparkle Animation
+            function createSparkle() {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                document.querySelector('.sparkles').appendChild(sparkle);
+                setTimeout(() => sparkle.remove(), 1200);
+            }
+            setInterval(createSparkle, 50); // Dense sparkles
+        });
+    </script>
+</body>
+</html>
